@@ -30,6 +30,8 @@ class MyApp(ShowBase):
         self.scene.setHpr(0, 80, 0)
         # current page int
         self.currentpage = 1;
+        # for bible image viewer
+        self.currentbibleimage = 1;
         # load up first 2 pages
         tex = loader.loadTexture('psalms/PsalmsJohn1.jpg')
         self.scene.find('**/pageone').setTexture(tex, 1)
@@ -55,8 +57,9 @@ class MyApp(ShowBase):
          self.b3.hide()
          self.b4 = DirectButton(text=("Hide Settings"),pos=(0,0.85,0.85), scale=.08, command=self.HideSettings)
          self.b5 = DirectButton(text=("View This Document In 2D (like a pdf)"),pos=(0,0.85,0.65), scale=.08, command=self.Show2DViewer)
-         self.b6 = DirectButton(text=("Hide All Buttons (you can use the escape key to show this menu)"),pos=(0,0.85,0.45), scale=.08, command=self.HideNavButtons)
-         self.b7 = DirectButton(text=("Quit"),pos=(0,0.85,0.25), scale=.08, command=sys.exit)
+         self.b6 = DirectButton(text=("View Bible Image Gallery"),pos=(0,0.85,0.45), scale=.08, command=self.ShowBibleImageGallery)
+         self.b7 = DirectButton(text=("Hide All Buttons (you can use the escape key to show this menu)"),pos=(0,0.85,0.25), scale=.08, command=self.HideNavButtons)
+         self.b8 = DirectButton(text=("Quit"),pos=(0,0.85,-0.05), scale=.08, command=sys.exit)
     def HideSettings(self):
         self.scene.show()
         self.b.show()
@@ -66,6 +69,7 @@ class MyApp(ShowBase):
         self.b5.hide()
         self.b6.hide()
         self.b7.hide()
+        self.b8.hide()
     def HideNavButtons(self):
         self.scene.show()
         self.b.hide()
@@ -75,6 +79,7 @@ class MyApp(ShowBase):
         self.b5.hide()
         self.b6.hide()
         self.b7.hide() 
+        self.b8.hide()
     def Show2DViewer(self):        
         self.b.hide()
         self.b2.hide()
@@ -83,6 +88,7 @@ class MyApp(ShowBase):
         self.b5.hide()
         self.b6.hide()
         self.b7.hide() 
+        self.b8.hide()
         self.scene.hide()
         self.LoadPsalmsFrame()
         self.b9 = DirectButton(text=("Back"),pos=(1,0.85,0.85), scale=.08, command=self.Hide2DViewer)
@@ -94,6 +100,46 @@ class MyApp(ShowBase):
                 offset = 722.5
                 self.image.setPos(1.4,0,offset + (-5 * x))
                 self.image.setScale(1)
+    def ShowBibleImageGallery(self):        
+        self.b.hide()
+        self.b2.hide()
+        self.b3.hide()
+        self.b4.hide()
+        self.b5.hide()
+        self.b6.hide()
+        self.b7.hide() 
+        self.b8.hide()
+        self.scene.hide()
+        self.b9 = DirectButton(text=("Back"),pos=(1,0.85,0.85), scale=.08, command=self.HideBibleImageGallery)  
+        self.b10 = DirectButton(text=("<--"),pos=(-1.12,-0.95,-0.95), scale=.15, command=self.PreviousBibleImage)
+        self.b11 = DirectButton(text=("-->"),pos=(1.12,-0.95,-0.95), scale=.15, command=self.NextBibleImage) 
+        self.currentbibleimage = 1;
+        self.image = self.loadImageAsPlane('psalms/BibleImages/' + str(self.currentbibleimage) + '.jpg')
+        self.image.reparentTo(render)    
+        self.image.setPos(0,12,0)   
+        base.camera.setPos(0,0,0)
+        base.camera.setHpr(0,0,0)
+
+    def PreviousBibleImage(self):
+        self.currentbibleimage = self.currentbibleimage - 1;
+        if self.currentbibleimage <= 0:
+            self.currentbibleimage = 1
+        self.image.removeNode()
+        self.image = self.loadImageAsPlane('psalms/BibleImages/' + str(self.currentbibleimage) + '.jpg')
+        self.image.reparentTo(render) 
+        self.image.setPos(0,12,0)   
+        base.camera.setPos(0,0,0)
+        base.camera.setHpr(0,0,0) 
+    def NextBibleImage(self):
+        self.currentbibleimage = self.currentbibleimage + 1;
+        if self.currentbibleimage >= 10:
+            self.currentbibleimage = 9
+        self.image.removeNode()
+        self.image = self.loadImageAsPlane('psalms/BibleImages/' + str(self.currentbibleimage) + '.jpg')
+        self.image.reparentTo(render)
+        self.image.setPos(0,12,0)   
+        base.camera.setPos(0,0,0)
+        base.camera.setHpr(0,0,0)
     def Hide2DViewer(self):        
        self.PsalmsFrame.hide()
        self.scene.show()
@@ -101,6 +147,19 @@ class MyApp(ShowBase):
        self.b2.show()
        self.b3.show()
        self.b9.hide()
+       base.camera.setPos(0,0,0)
+       base.camera.setHpr(0,0,0)
+    def HideBibleImageGallery(self):        
+       self.image.removeNode()
+       self.scene.show()
+       self.b.show()
+       self.b2.show()
+       self.b3.show()
+       self.b9.hide()
+       self.b10.hide()
+       self.b11.hide()
+       base.camera.setPos(0,0,0)
+       base.camera.setHpr(0,0,0)
     def NextPage(self):
          self.currentpage = self.currentpage + 2
          if self.currentpage >= 146:
