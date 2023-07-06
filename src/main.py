@@ -145,8 +145,8 @@ class MyApp(ShowBase):
         base.camera.setHpr(0,0,0) 
     def NextBibleImage(self):
         self.currentbibleimage = self.currentbibleimage + 1;
-        if self.currentbibleimage >= 11:
-            self.currentbibleimage = 10
+        if self.currentbibleimage >= 12:
+            self.currentbibleimage = 11
         self.image.removeNode()
         self.image = self.loadImageAsPlane('psalms/BibleImages/' + str(self.currentbibleimage) + '.jpg')
         self.image.reparentTo(render)

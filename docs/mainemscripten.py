@@ -149,7 +149,7 @@ class MyApp(ShowBase):
         self.currentbibleimage = 1;
         self.image = self.loadImageAsPlane("psalms/BibleImages/" + str(self.currentbibleimage) + ".jpg")
         self.image.reparentTo(render)    
-        self.image.setPos(0,6.5,0)   
+        self.image.setPos(0,7.5,0)   
         base.camera.setPos(0,0,0)
         base.camera.setHpr(0,0,0)
     def PreviousBibleImage(self):
@@ -159,17 +159,17 @@ class MyApp(ShowBase):
         self.image.removeNode()
         self.image = self.loadImageAsPlane("psalms/BibleImages/" + str(self.currentbibleimage) + ".jpg")
         self.image.reparentTo(render) 
-        self.image.setPos(0,6.5,0)   
+        self.image.setPos(0,7.5,0)   
         base.camera.setPos(0,0,0)
         base.camera.setHpr(0,0,0) 
     def NextBibleImage(self):
         self.currentbibleimage = self.currentbibleimage + 1;
-        if self.currentbibleimage >= 11:
-            self.currentbibleimage = 10
+        if self.currentbibleimage >= 12:
+            self.currentbibleimage = 11
         self.image.removeNode()
         self.image = self.loadImageAsPlane("psalms/BibleImages/" + str(self.currentbibleimage) + ".jpg")
         self.image.reparentTo(render)
-        self.image.setPos(0,6.5,0)   
+        self.image.setPos(0,7.5,0)   
         base.camera.setPos(0,0,0)
         base.camera.setHpr(0,0,0)
     def Hide2DViewer(self):        
